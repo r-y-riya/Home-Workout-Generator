@@ -3,4 +3,7 @@ runOnSave = true
 
 [theme]
 primaryColor = "#F63366"
-backgroundColor = "white"
+backgroundColor = "#eeeeee"
+secondaryBackgroundColor = "#ffe49b"
+textColor = "Black"
+font="monospace"
