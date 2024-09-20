@@ -36,17 +36,21 @@ def GenerateExercises(selected_muscles, number):
                 count = count + 1
     return exercise_list 
 
-guide = 'Choose what muscles you want to hit and the number of exercises you want to do and a random workout will be generated for you. It is recommened to do 3 sets for each exercise but that, along with the recommended reps should be whatever you are comfortable with.'
-st.header('Home Workout Generator', divider='red', anchor=False, help=guide)
+guide = 'Choose what muscles you want to hit and the number of exercises you want to do and a random workout will be generated for you. All exercises can be done from your home only using dumbbells.'
+st.header('Home Workout Generator', divider='red', anchor=False)
+with st.expander('**About App**'):
+    st.write(guide)
 exercises = pd.read_csv('Data/Exercises.csv') #load exercise file
 types = st.multiselect('**Which muscle groups do you want to hit**', options=['Chest', 'Shoulders', 'Arms', 'Back', 'Legs', 'Core']) #request exercise types desired from type list
 selected_muscles = exercises[exercises['type'].isin(types)] #filtered exercise list
-number = st.number_input("**Number Of Exercises**", step=1, min_value=0, max_value=len(selected_muscles)) #request number of exercises that doesn't exceed quantity of avaiable exercises
-
-if st.button('**Generate**', type='primary'): #generate exercises button
-    exercise_list = GenerateExercises(selected_muscles, number) #generate random exercises
-    for index, row in exercise_list.iterrows(): #for each exercise chosen
-        st.markdown(f'<p class="big-font"><b>{row['name']}: 3 sets x {row['reps']}<b></p>',  unsafe_allow_html=True) #display exercise and setsxreps
-        with st.expander('**DEMO**'): #more demo and description expander
-            st.markdown(row['description']) #show exercise description
-            st.video('Data/ExerciseVids/' + row['name'].lower().replace(" ", "") + '.MOV', loop=True, autoplay=False, muted=True) #play demo video
+col1,col2 = st.columns([1,1], vertical_alignment='bottom')
+with col1:
+    number = st.number_input(f'**Number Of Exercises | Max: {len(selected_muscles)}**', step=1, min_value=0, max_value=len(selected_muscles)) #request number of exercises that doesn't exceed quantity of avaiable exercises
+with col2:
+    if st.button('**Generate**', type='primary', use_container_width=True): #generate exercises button
+        exercise_list = GenerateExercises(selected_muscles, number) #generate random exercises
+        for index, row in exercise_list.iterrows(): #for each exercise chosen
+            st.markdown(f'<p class="big-font"><b>{row['name']}: 3 sets x {row['reps']}<b></p>',  unsafe_allow_html=True) #display exercise and setsxreps
+            with st.expander('**DEMO**'): #more demo  and description expander
+                st.markdown(row['description']) #show exercise description
+                st.video('Data/ExerciseVids/' + row['name'].lower().replace(" ", "") + '.MOV', loop=True, autoplay=False, muted=True) #play demo video
