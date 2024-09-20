@@ -20,7 +20,7 @@ st.markdown(
 st.markdown("""
 <style>
 .big-font {
-    font-size:18px !important;
+    font-size:17px !important;
 }
 </style>
 """, unsafe_allow_html=True)
