@@ -20,5 +20,9 @@ number = st.number_input("Number Of Exercises", step=1, min_value=0, max_value=l
 if st.button('Generate'):
     exercise_list = GenerateExercises(selected_exercises, number)
     for index, row in exercise_list.iterrows():
-        st.write(row)
-        st.video('Data/ExerciseVids/' + row['name'].lower().replace(" ", "") + '.MOV', loop=True, autoplay=True, muted=True)
+        st.write(f'**{row['name']}**')
+        st.write(f'**Muscle Group: {row['type']}**')
+        st.write(f'**Reps: {row['reps']}**')
+        with st.expander('description'):
+            st.markdown(row['description'])
+            st.video('Data/ExerciseVids/' + row['name'].lower().replace(" ", "") + '.MOV', loop=True, autoplay=True, muted=True)
