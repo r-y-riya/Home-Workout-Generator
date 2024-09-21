@@ -9,7 +9,7 @@ st.markdown(
          .stApp {{
              border: 3px solid black;
              border-top: 63px solid black;
-             background: url(data:image/{'jpg'};base64,{base64.b64encode(open('Data/background2.jpg', "rb").read()).decode()});
+             background: url(data:image/{'jpg'};base64,{base64.b64encode(open('Data/background3.jpg', "rb").read()).decode()});
              background-size: cover
          }}
          </style>
