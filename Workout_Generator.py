@@ -9,12 +9,6 @@ from cryptography.fernet import Fernet
 import pickle
 
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪', initial_sidebar_state='collapsed')
-no_sidebar_style = """
-    <style>
-        div[data-testid="stSidebarNav"] {display: none;}
-    </style>
-"""
-st.markdown(no_sidebar_style, unsafe_allow_html=True)
 def encrypt_users(users, key):
     cipher_suite = Fernet(key)
     encrypted_users = cipher_suite.encrypt(pickle.dumps(users))
