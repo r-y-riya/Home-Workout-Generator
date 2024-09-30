@@ -6,8 +6,7 @@ Workout_Generator.Background()
 Workout_Generator.InitializeLogin()
 config = Workout_Generator.Authenticator()
 
-st.write(st.session_state['authenticator'])
-#name, authentication_status, username = st.session_state['authenticator'].login(location='main')
+name, authentication_status, username = st.session_state['authenticator'].login(location='main')
 
 if st.session_state['authentication_status']:
     st.switch_page('Workout_Generator.py')
