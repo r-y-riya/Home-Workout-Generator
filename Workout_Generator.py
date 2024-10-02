@@ -60,27 +60,22 @@ InitializeLogin()
 config = Authenticator()
 Background()
 
+if not st.session_state['authentication_status']:
+    if st.button('**Login**'):
+        st.switch_page('pages/1_Login.py')
 
-if st.session_state['authentication_status']:
-    st.write(f'**Welcome {st.session_state['name']}**')
-
-button1,button2,button3,buffer = st.columns([.45,.8,.8,1.5], vertical_alignment='bottom')
-
-with button1:
-    if not st.session_state['authentication_status']:
-        if st.button('**Login**'):
-            st.switch_page('pages/1_Login.py')
-    else:
-        
-        st.session_state['authenticator'].logout('**Logout**', 'main')
-with button2:
+name,buttons = st.columns([.7,.25], vertical_alignment='top')
+with name:
     if st.session_state['authentication_status']:
-        if st.button('**Reset Password**', use_container_width=True):
-            st.switch_page('pages/5_Reset_Password.py')
-with button3:
+        st.write(f'**Welcome {st.session_state['name']}**')
+with buttons:    
     if st.session_state['authentication_status']:
-        if st.button('**Update Details**', use_container_width=True):
-            st.switch_page('pages/6_Update_Details.py')
+        with st.expander('**⋮**'):
+            st.session_state['authenticator'].logout('Logout ', 'main')
+            if st.button('Reset Password'):
+                st.switch_page('pages/5_Reset_Password.py')
+            if st.button('Update Details'):
+                st.switch_page('pages/6_Update_Details.py')
 
 def GenerateExercises(selected_muscles, number):
     count=0
