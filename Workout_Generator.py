@@ -60,13 +60,12 @@ InitializeLogin()
 config = Authenticator()
 Background()
 
-x=.255 - .01*(len(st.session_state['name'])-6)
-buttons,buffer = st.columns([.5-x,.5+x])
-
 if not st.session_state['authentication_status']:
     if st.button('**Login**'):
         st.switch_page('pages/1_Login.py')
 else:
+    x=.255 - .01*(len(st.session_state['name'])-6)
+    buttons,buffer = st.columns([.5-x,.5+x])
     with buttons:
         with st.expander(f'**Welcome {st.session_state['name']}**'):
             st.session_state['authenticator'].logout('Logout ', 'main')
