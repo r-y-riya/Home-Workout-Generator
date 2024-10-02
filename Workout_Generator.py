@@ -60,17 +60,14 @@ InitializeLogin()
 config = Authenticator()
 Background()
 
+buttons,buffer = st.columns([.25,.7])
+
 if not st.session_state['authentication_status']:
     if st.button('**Login**'):
         st.switch_page('pages/1_Login.py')
-
-name,buttons = st.columns([.7,.25], vertical_alignment='top')
-with name:
-    if st.session_state['authentication_status']:
-        st.write(f'**Welcome {st.session_state['name']}**')
-with buttons:    
-    if st.session_state['authentication_status']:
-        with st.expander('**⋮**'):
+else:
+    with buttons:
+        with st.expander(f'**Welcome {st.session_state['name']}**'):
             st.session_state['authenticator'].logout('Logout ', 'main')
             if st.button('Reset Password'):
                 st.switch_page('pages/5_Reset_Password.py')
