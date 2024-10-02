@@ -60,7 +60,8 @@ InitializeLogin()
 config = Authenticator()
 Background()
 
-buttons,buffer = st.columns([.25,.7])
+x=.255 - .01*(len(st.session_state['name'])-6)
+buttons,buffer = st.columns([.5-x,.5+x])
 
 if not st.session_state['authentication_status']:
     if st.button('**Login**'):
