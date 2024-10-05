@@ -90,12 +90,12 @@ st.header('Home Workout Generator', divider='red', anchor=False)
 with st.expander('**About App**'):
     st.write(guide)
 exercises = pd.read_csv('Data/Exercises.csv') #load exercise file
-types = st.multiselect('**Which muscle groups do you want to hit**', options=['Chest', 'Shoulders', 'Arms', 'Back', 'Legs', 'Core']) #request exercise types desired from type list
+types = st.multiselect('**Which muscle groups do you want to work**', options=['Chest', 'Shoulders', 'Arms', 'Back', 'Legs', 'Core']) #request exercise types desired from type list
 selected_muscles = exercises[exercises['type'].isin(types)] #filtered exercise list
 
 
 col1,col2 = st.columns([1,1], vertical_alignment='bottom')
-number = col1.number_input(f'**Number Of Exercises | Max: {len(selected_muscles)}**', step=1, min_value=0, max_value=len(selected_muscles)) #request number of exercises that doesn't exceed quantity of avaiable exercises
+number = col1.number_input(f'**Number of exercises | Max: {len(selected_muscles)}**', step=1, min_value=0, max_value=len(selected_muscles)) #request number of exercises that doesn't exceed quantity of avaiable exercises
 generate =  col2.button('**Generate**', type='primary', use_container_width=True) #generate exercises button
 if generate:
     exercise_list = GenerateExercises(selected_muscles, number) #generate random exercises
