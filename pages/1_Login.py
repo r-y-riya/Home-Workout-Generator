@@ -6,7 +6,7 @@ Workout_Generator.Background()
 Workout_Generator.InitializeLogin()
 config = Workout_Generator.Authenticator()
 
-name, authentication_status, username = st.session_state['authenticator'].login(location='main')
+st.session_state['authenticator'].login(location='main')
 
 if st.session_state['authentication_status']:
     st.switch_page('Workout_Generator.py')
@@ -16,17 +16,17 @@ elif st.session_state['authentication_status'] == None:
     st.warning('Please enter your username and password')
 
 
-col1, col2, col3, col4, col5 = st.columns([1,1,2,2,1])
+col1, col2, col3, col4, col5 = st.columns([.28,.41,.66,.68,1])
 with col1:
-    if st.button('**Exit**', type='primary', use_container_width=True):
+    if st.button('**Exit**', type='primary'):
         st.switch_page('Workout_Generator.py')
 with col2:
-    if st.button('**Register**', type='primary', use_container_width=True):
+    if st.button('**Register**', type='primary'):
         st.switch_page('pages/2_Register.py')
 with col3:
-    if st.button('**Forgot Password**', type='primary', use_container_width=True):
+    if st.button('**Forgot Password**', type='primary'):
         st.switch_page('pages/3_Forgot_Password.py')
 with col4:
-    if st.button('**Forgot Username**', type='primary', use_container_width=True):
+    if st.button('**Forgot Username**', type='primary'):
         st.switch_page('pages/4_Forgot_Username.py')       
 

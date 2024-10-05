@@ -69,10 +69,10 @@ else:
     with buttons:
         with st.expander(f'**Welcome {st.session_state['name']}**'):
             st.session_state['authenticator'].logout('Logout ', 'main')
+            if st.button('Update Profile'):
+                st.switch_page('pages/6_Update_Details.py')
             if st.button('Reset Password'):
                 st.switch_page('pages/5_Reset_Password.py')
-            if st.button('Update Details'):
-                st.switch_page('pages/6_Update_Details.py')
 
 def GenerateExercises(selected_muscles, number):
     count=0
@@ -85,7 +85,7 @@ def GenerateExercises(selected_muscles, number):
                 count = count + 1
     return exercise_list 
 
-guide = 'Choose what muscles you want to hit and the number of exercises you want to do and a random workout will be generated for you. All exercises can be done from your home only using dumbbells.'
+guide = 'Choose what muscles you want to work and the number of exercises you want to do and a random workout will be generated for you. All exercises can be done from your home only using dumbbells.'
 st.header('Home Workout Generator', divider='red', anchor=False)
 with st.expander('**About App**'):
     st.write(guide)
