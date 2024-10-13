@@ -8,7 +8,7 @@ Workout_Generator.InitializeLogin()
 config = Workout_Generator.Authenticator()
 
 try:
-    if st.session_state['authenticator'].register_user(pre_authorization=False, location='main', captcha=False):
+    if st.session_state['authenticator'].register_user(location='main', captcha=False, merge_username_email=True):
         st.success('User registered successfully')
         config['credentials']['usernames'] = Workout_Generator.encrypt_users(config['credentials']['usernames'], st.secrets['key'])
         with open('config.yaml', 'w') as file: 
