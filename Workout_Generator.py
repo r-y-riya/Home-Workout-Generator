@@ -81,16 +81,20 @@ def Generator():
             with st.expander('**DEMO**'): #more demo  and description expander
                 st.markdown(row['description']) #show exercise description
                 st.video('Data/ExerciseVids/' + row['name'].lower().replace(" ", "") + '.MOV', loop=True, autoplay=False, muted=True) #play demo video
-def Profile(key1,key2,key3):
-    x=.255 - .01*(len(st.session_state['name'])-6)
-    buttons,buffer = st.columns([.5-x,.5+x])
-    with buttons:
-        with st.expander(f'**Welcome {st.session_state['name']}**'):
-            st.session_state['authenticator'].logout('Logout ', 'main', key=key1)
-            if st.button('Update Profile', key=key2):
-                st.switch_page('pages/6_Update_Details.py')
-            if st.button('Reset Password', key=key3):
-                st.switch_page('pages/5_Reset_Password.py')
+def Profile(key1,key2,key3,key4):
+    if not st.session_state['authentication_status']:
+        if st.button('**Login**', key4):
+            st.switch_page('pages/1_Login.py')
+    else:
+        x=.255 - .01*(len(st.session_state['name'])-6)
+        buttons,buffer = st.columns([.5-x,.5+x])
+        with buttons:
+            with st.expander(f'**Welcome {st.session_state['name']}**'):
+                st.session_state['authenticator'].logout('Logout ', 'main', key=key1)
+                if st.button('Update Profile', key=key2):
+                    st.switch_page('pages/6_Update_Details.py')
+                if st.button('Reset Password', key=key3):
+                    st.switch_page('pages/5_Reset_Password.py')
 
 st.markdown("""
 <style>
@@ -104,19 +108,17 @@ InitializeLogin()
 config = Authenticator()
 Background()
 
-if not st.session_state['authentication_status']:
-    if st.button('**Login**'):
-        st.switch_page('pages/1_Login.py')    
+  
 
-if st.session_state['authentication_status']:
-    tab1, tab2 = st.tabs(['Generator', 'Past Workouts'])
-    with tab1:
-        Profile(key1='gen_logout', key2='gen_profile', key3='gen_password')
-        Generator()
 
-    with tab2:
-        Profile(key1='cal_logout', key2='cal_profile', key3='cal_password')
+tab1, tab2 = st.tabs(['Generator', 'Past Workouts'])
+with tab1:
+    Profile(key1='gen_logout', key2='gen_profile', key3='gen_password', key4='gen_login')
+    Generator()
 
+with tab2:
+    Profile(key1='cal_logout', key2='cal_profile', key3='cal_password', key4='cal_login')
+    if st.session_state['authentication_status']:
         events = [
             {
                 "title": "Event 1",
@@ -160,6 +162,6 @@ if st.session_state['authentication_status']:
 
         if state.get("eventsSet") is not None:
             st.session_state["events"] = state["eventsSet"]
-
-else:
-    Generator()
+    else:
+        buf,col = st.columns([.45,1] )
+        col.markdown(f'<p class="big-font"><b>Sign In To View Past Workouts<b></p>',  unsafe_allow_html=True)
