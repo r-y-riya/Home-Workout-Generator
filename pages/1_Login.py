@@ -1,6 +1,7 @@
 import streamlit as st
 import Workout_Generator
 
+
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪')
 
 Workout_Generator.Background()

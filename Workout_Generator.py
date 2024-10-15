@@ -142,7 +142,7 @@ with tab2:
             options=calendar_options,
             custom_css="""
             .fc-event-past {
-                opacity: 0.8;
+                opacity: 1;
             }
             .fc-event-time {
                 font-style: italic;
@@ -151,13 +151,23 @@ with tab2:
                 font-weight: 700;
             }
             .fc-toolbar-title {
-                font-size: 2rem;
+                font-size: 1.2rem;
             }
             """
         )
 
         if state.get("eventsSet") is not None:
             st.session_state["events"] = state["eventsSet"]
+        
+        calendar_style = """
+        <style>
+            iframe[title="streamlit_calendar.calendar"] {
+                height: 585px; 
+            }
+        </style>
+        """
+        st.markdown(calendar_style, unsafe_allow_html=True)    
+        
     else:
         buf,col = st.columns([.45,1] )
         col.markdown(f'<p class="big-font"><b>Sign In To View Past Workouts<b></p>',  unsafe_allow_html=True)
