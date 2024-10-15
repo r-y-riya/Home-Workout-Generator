@@ -81,20 +81,17 @@ def Generator():
             with st.expander('**DEMO**'): #more demo  and description expander
                 st.markdown(row['description']) #show exercise description
                 st.video('Data/ExerciseVids/' + row['name'].lower().replace(" ", "") + '.MOV', loop=True, autoplay=False, muted=True) #play demo video
-def Profile(key1,key2,key3,key4):
+def Profile():
     if not st.session_state['authentication_status']:
-        if st.button('**Login**', key4):
+        if st.button('**Login**'):
             st.switch_page('pages/1_Login.py')
     else:
-        x=.255 - .01*(len(st.session_state['name'])-6)
-        buttons,buffer = st.columns([.5-x,.5+x])
-        with buttons:
-            with st.expander(f'**Welcome {st.session_state['name']}**'):
-                st.session_state['authenticator'].logout('Logout ', 'main', key=key1)
-                if st.button('Update Profile', key=key2):
-                    st.switch_page('pages/6_Update_Details.py')
-                if st.button('Reset Password', key=key3):
-                    st.switch_page('pages/5_Reset_Password.py')
+        st.write(f'**Welcome {st.session_state['name']}**')
+        st.session_state['authenticator'].logout('Logout ', 'main')
+        if st.button('Update Profile'):
+            st.switch_page('pages/6_Update_Details.py')
+        if st.button('Reset Password'):
+            st.switch_page('pages/5_Reset_Password.py')
 
 st.markdown("""
 <style>
@@ -108,16 +105,15 @@ InitializeLogin()
 config = Authenticator()
 Background()
 
-  
+if st.session_state['authentication_status']:
+    label = st.session_state['name']
+else:
+    label = 'Login'
 
-
-tab1, tab2 = st.tabs(['Generator', 'Past Workouts'])
+tab1, tab2, tab3 = st.tabs(['Generator', 'Past Workouts', label])
 with tab1:
-    Profile(key1='gen_logout', key2='gen_profile', key3='gen_password', key4='gen_login')
     Generator()
-
 with tab2:
-    Profile(key1='cal_logout', key2='cal_profile', key3='cal_password', key4='cal_login')
     if st.session_state['authentication_status']:
         events = [
             {
@@ -165,3 +161,5 @@ with tab2:
     else:
         buf,col = st.columns([.45,1] )
         col.markdown(f'<p class="big-font"><b>Sign In To View Past Workouts<b></p>',  unsafe_allow_html=True)
+with tab3:
+    Profile()

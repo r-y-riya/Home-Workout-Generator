@@ -2,12 +2,13 @@ import streamlit as st
 import Workout_Generator
 
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪')
+
 Workout_Generator.Background()
 Workout_Generator.InitializeLogin()
 config = Workout_Generator.Authenticator()
 
 st.session_state['authenticator'].login(location='main')
-
+    
 if st.session_state['authentication_status']:
     st.switch_page('Workout_Generator.py')
 elif st.session_state['authentication_status'] == False:
