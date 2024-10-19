@@ -2,6 +2,6 @@ cryptography==43.0.1
 streamlit_authenticator==0.4.1
 yagmail==0.15.293
 streamlit_calendar==1.2.0
-streamlit-screen-stats=0.0.77
+streamlit-screen-stats==0.0.77
 streamlit-browser-session-storage==0.0.11
 streamlit-local-storage==0.0.24
