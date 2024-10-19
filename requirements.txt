@@ -2,3 +2,4 @@ cryptography==43.0.1
 streamlit_authenticator==0.4.1
 yagmail==0.15.293
 streamlit_calendar==1.2.0
+streamlit_js_eval==0.1.7
