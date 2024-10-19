@@ -117,6 +117,16 @@ tab1, tab2, tab3 = st.tabs(['Generator', 'Past Workouts', label])
 with tab1:
     Generator()
 with tab2:
+    screenD = ScreenData(setTimeout=1000)
+    screen_d = screenD.st_screen_data()
+
+    if screen_d['innerWidth'] > 810:
+        height = 585
+        buttonsize = 1.2
+    else:
+        buttonsize = 1.2*screen_d['innerWidth']/810
+        height = 585*screen_d['innerWidth']/810
+
     if st.session_state['authentication_status']:
         events = [
             {
@@ -143,35 +153,11 @@ with tab2:
         state = calendar(
             events=st.session_state.get("events", events),
             options=calendar_options,
-            custom_css="""
-            .fc-event-past {
-                opacity: 1;
-            }
-            .fc-event-time {
-                font-style: italic;
-            }
-            .fc-event-title {
-                font-weight: 700;
-            }
-            .fc-toolbar-title {
-                font-size: 1.2rem;
-            }
-            .fc-button {
-                font-size: 1rem;
-            }
-            """
+            custom_css=".fc-event-past {opacity: 1;} .fc-event-time {font-style: italic;} .fc-event-title {font-weight: 700;} .fc-toolbar-title {font-size: 1.2rem;} .fc-button {font-size: " + str(buttonsize) + "rem;}"
         )
 
         if state.get("eventsSet") is not None:
-            st.session_state["events"] = state["eventsSet"]
-        
-        screenD = ScreenData(setTimeout=1000)
-        screen_d = screenD.st_screen_data()
-
-        if screen_d['innerWidth'] > 810:
-            height = 585
-        else:
-            height = 585*screen_d['innerWidth']/810
+            st.session_state["events"] = state["eventsSet"]        
         
         calendar_style = '<style> iframe[title="streamlit_calendar.calendar"] {height: ' + str(height) + 'px;} </style>'
         st.markdown(calendar_style, unsafe_allow_html=True)
