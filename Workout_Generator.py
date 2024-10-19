@@ -122,11 +122,11 @@ with tab2:
 
     if screen_d['innerWidth'] > 810:
         height = 585
-        buttonsize = 1.2
+        buttonsize = 1.5
         titlesize = 2
     else:
         titlesize = 2*screen_d['innerWidth']/810
-        buttonsize = 1.2*screen_d['innerWidth']/810
+        buttonsize = 1.5*screen_d['innerWidth']/810
         height = 585*screen_d['innerWidth']/810
 
     if st.session_state['authentication_status']:
