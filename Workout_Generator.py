@@ -8,9 +8,11 @@ from yaml.loader import SafeLoader
 from cryptography.fernet import Fernet
 import pickle
 from streamlit_calendar import calendar
-from streamlit_js_eval import streamlit_js_eval
+from st_screen_stats import ScreenData
 
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪', initial_sidebar_state='collapsed')
+
+
 def encrypt_users(users, key):
     cipher_suite = Fernet(key)
     encrypted_users = cipher_suite.encrypt(pickle.dumps(users))
@@ -134,7 +136,7 @@ with tab2:
             "headerToolbar": {
                 "left": "today prev,next",
                 "center": "title",
-                "right": "dayGridDay,dayGridWeek,dayGridMonth",
+                "right": "dayGridDay,dayGridMonth",
             },
         }
 
@@ -160,16 +162,16 @@ with tab2:
         if state.get("eventsSet") is not None:
             st.session_state["events"] = state["eventsSet"]
         
-        page_width = streamlit_js_eval(js_expressions='window.innerWidth', key='WIDTH',  want_output = True,)
-        st.write(page_width)
-        calendar_style = """
-        <style>
-            iframe[title="streamlit_calendar.calendar"] {
-                height: 585px; 
-            }
-        </style>
-        """
-        st.markdown(calendar_style, unsafe_allow_html=True)    
+        screenD = ScreenData(setTimeout=1000)
+        screen_d = screenD.st_screen_data()
+
+        if screen_d['innerWidth'] > 810:
+            height = 585
+        else:
+            height = 585*screen_d['innerWidth']/810
+        
+        calendar_style = '<style> iframe[title="streamlit_calendar.calendar"] {height: ' + str(height) + 'px;} </style>'
+        st.markdown(calendar_style, unsafe_allow_html=True)
         
     else:
         buf,col = st.columns([.45,1] )
