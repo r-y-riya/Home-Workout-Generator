@@ -156,6 +156,9 @@ with tab2:
             .fc-toolbar-title {
                 font-size: 1.2rem;
             }
+            .fc-button {
+                font-size: 1rem;
+            }
             """
         )
 
