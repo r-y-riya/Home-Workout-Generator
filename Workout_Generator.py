@@ -123,7 +123,9 @@ with tab2:
     if screen_d['innerWidth'] > 810:
         height = 585
         buttonsize = 1.2
+        titlesize = 2
     else:
+        titlesize = 2*screen_d['innerWidth']/810
         buttonsize = 1.2*screen_d['innerWidth']/810
         height = 585*screen_d['innerWidth']/810
 
@@ -153,7 +155,7 @@ with tab2:
         state = calendar(
             events=st.session_state.get("events", events),
             options=calendar_options,
-            custom_css=".fc-event-past {opacity: 1;} .fc-event-time {font-style: italic;} .fc-event-title {font-weight: 700;} .fc-toolbar-title {font-size: 1.2rem;} .fc-button {font-size: " + str(buttonsize) + "rem;}"
+            custom_css=".fc-event-past {opacity: 1;} .fc-event-time {font-style: italic;} .fc-event-title {font-weight: 700;} .fc-toolbar-title {font-size: " + str(titlesize) + "rem;} .fc-button {font-size: " + str(buttonsize) + "rem;}"
         )
 
         if state.get("eventsSet") is not None:
