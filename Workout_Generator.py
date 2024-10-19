@@ -157,7 +157,7 @@ with tab2:
                 font-size: 1.2rem;
             }
             .fc-button {
-                font-size: 1rem;
+                font-size: .1rem;
             }
             """
         )
