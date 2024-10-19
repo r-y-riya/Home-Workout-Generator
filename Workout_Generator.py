@@ -134,7 +134,7 @@ with tab2:
             "selectable": "true",
             "initialView": "dayGridMonth",
             "headerToolbar": {
-                "left": "today prev,next",
+                "left": "prev,next",
                 "center": "title",
                 "right": "dayGridDay,dayGridMonth",
             },
