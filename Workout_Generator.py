@@ -8,6 +8,7 @@ from yaml.loader import SafeLoader
 from cryptography.fernet import Fernet
 import pickle
 from streamlit_calendar import calendar
+from streamlit_js_eval import streamlit_js_eval
 
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪', initial_sidebar_state='collapsed')
 def encrypt_users(users, key):
@@ -159,6 +160,8 @@ with tab2:
         if state.get("eventsSet") is not None:
             st.session_state["events"] = state["eventsSet"]
         
+        page_width = streamlit_js_eval(js_expressions='window.innerWidth', key='WIDTH',  want_output = True,)
+        st.write(page_width)
         calendar_style = """
         <style>
             iframe[title="streamlit_calendar.calendar"] {
