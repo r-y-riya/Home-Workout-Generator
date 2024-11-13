@@ -87,7 +87,7 @@ def Generator():
 def Profile():
     if not st.session_state['authentication_status']:
         if st.button('**Login**'):
-            st.switch_page('pages/1_Login.py')
+            st.switch_page('pages/7_test.py')
     else:
         st.write(f'**Welcome {st.session_state['name']}**')
         st.session_state['authenticator'].logout('Logout ', 'main')
