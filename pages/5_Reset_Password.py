@@ -1,16 +1,16 @@
 import streamlit as st
 import yaml
-import Workout_Generator
+from common import Background, Authenticator, InitializeLogin, encrypt_users
 
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪')
-Workout_Generator.Background()
-Workout_Generator.InitializeLogin()
-config = Workout_Generator.Authenticator()
+Background()
+InitializeLogin()
+config = Authenticator()
 
 try:
     if st.session_state['authenticator'].reset_password(st.session_state['username'], location='main'):
         st.success('Password Reset Successfully')
-        config['credentials']['usernames'] = Workout_Generator.encrypt_users(config['credentials']['usernames'], st.secrets['key'])
+        config['credentials']['usernames'] = encrypt_users(config['credentials']['usernames'], st.secrets['key'])
         with open('config.yaml', 'w') as file: 
             yaml.dump(config, file, default_flow_style=False)
 except Exception as e:

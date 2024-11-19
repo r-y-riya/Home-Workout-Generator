@@ -1,12 +1,12 @@
 import streamlit as st
-import Workout_Generator
+from common import Background, Authenticator, InitializeLogin, encrypt_users
 
 
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪')
 
-Workout_Generator.Background()
-Workout_Generator.InitializeLogin()
-config = Workout_Generator.Authenticator()
+Background()
+InitializeLogin()
+config = Authenticator()
 
 st.session_state['authenticator'].login(location='main')
     

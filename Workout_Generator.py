@@ -1,56 +1,12 @@
 import streamlit as st
 import pandas as pd
 import random
-import base64
-import streamlit_authenticator as stauth
-import yaml
-from yaml.loader import SafeLoader
-from cryptography.fernet import Fernet
-import pickle
 from streamlit_calendar import calendar
 from st_screen_stats import ScreenData
+from common import Background, Authenticator, InitializeLogin, encrypt_users
 
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪', initial_sidebar_state='collapsed')
 
-
-def encrypt_users(users, key):
-    cipher_suite = Fernet(key)
-    encrypted_users = cipher_suite.encrypt(pickle.dumps(users))
-    return encrypted_users
-def InitializeLogin():
-    if 'name' not in st.session_state:
-        st.session_state['name'] = None
-    if 'authentication_status' not in st.session_state:
-        st.session_state['authentication_status'] = None
-    if 'username' not in st.session_state:
-        st.session_state['username'] = None
-def Authenticator():
-    with open('config.yaml') as file:
-        config = yaml.load(file, Loader=SafeLoader)
-    encrypted_users = config['credentials']['usernames']
-    cipher_suite = Fernet(st.secrets['key'])
-    config['credentials']['usernames'] = pickle.loads(cipher_suite.decrypt(encrypted_users))
-    st.session_state['authenticator'] = stauth.Authenticate(
-        config['credentials'],
-        config['cookie']['name'],
-        config['cookie']['key'],
-        config['cookie']['expiry_days']
-    )
-    return config
-def Background():    
-    st.markdown(
-            f"""
-            <style>
-            .stApp {{
-                border: 3px solid black;
-                border-top: 63px solid black;
-                background: url(data:image/{'jpg'};base64,{base64.b64encode(open('Data/background3.jpg', "rb").read()).decode()});
-                background-size: cover
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True
-        ) #set background image and page border
 def GenerateExercises(selected_muscles, number):
         count=0
         exercise_list = pd.DataFrame(columns=['name', 'type', 'description', 'reps']) #empty datafram to hold info on chosen exercises
@@ -87,7 +43,7 @@ def Generator():
 def Profile():
     if not st.session_state['authentication_status']:
         if st.button('**Login**'):
-            st.switch_page('pages/7_test.py')
+            st.switch_page('pages/1_Login.py')
     else:
         st.write(f'**Welcome {st.session_state['name']}**')
         st.session_state['authenticator'].logout('Logout ', 'main')

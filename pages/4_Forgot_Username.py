@@ -1,14 +1,14 @@
 import streamlit as st
 import yaml
-import Workout_Generator
+from common import Background, Authenticator, InitializeLogin, encrypt_users
 import yagmail
 from cryptography.fernet import Fernet
 
 st.set_page_config(page_title='Home Workout Generator', page_icon='💪')
 st.markdown("<style> ul {display: none;} </style>", unsafe_allow_html=True)
-Workout_Generator.Background()
-Workout_Generator.InitializeLogin()
-config = Workout_Generator.Authenticator()
+Background()
+InitializeLogin()
+config = Authenticator()
 
 with open("email.yaml", "r") as f:
     email = yaml.safe_load(f)
@@ -27,7 +27,7 @@ try:
             contents=f'Your username is: {username_forgot_username}'
         )
         st.success(f'Username sent securely to {email_forgot_username}') # Username to be transferred to user securely
-        config['credentials']['usernames'] = Workout_Generator.encrypt_users(config['credentials']['usernames'], st.secrets['key'])
+        config['credentials']['usernames'] = encrypt_users(config['credentials']['usernames'], st.secrets['key'])
         with open('config.yaml', 'w') as file: 
             yaml.dump(config, file, default_flow_style=False)
     else:
